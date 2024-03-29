@@ -1,6 +1,6 @@
+name: publish-docs
+
 on:
-  pull_request:
-    branches: [ '*' ]
   push:
     branches:
       - "main"
@@ -27,4 +27,4 @@ jobs:
       - run: |
           poetry install
       - run: |
-          poetry run build --version "${{ github.ref_name }}"
+          poetry run publish --version "${{ github.ref_name }}"
