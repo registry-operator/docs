@@ -1,0 +1,24 @@
+site_name: registry-operator
+repo_url: https://github.com/registry-operator/registry-operator
+
+copyright: >
+  Copyright &copy; <script>document.write(new Date().getFullYear())</script> registry-operator Authors
+
+plugins:
+- search
+
+theme:
+  name: material
+  language: en
+
+  custom_dir: docs/overrides
+
+  features:
+  - navigation.tabs
+  - header.autohide
+  - search.suggest
+  - search.highlight
+
+extra:
+  version:
+    provider: mike

@@ -14,3 +14,49 @@ Join the community to discuss ongoing operator development and usage in [#regist
 <!-- Resources -->
 
 [license]: https://github.com/registry-operator/docs/blob/main/LICENSE
+
+## Developing
+
+### Setting Up Environment
+
+Ensure you have Python and Poetry installed on your system.
+
+```sh
+poetry install
+```
+
+### Code Formatting and Linting
+
+To ensure code consistency and quality, use the following commands:
+
+```sh
+poetry run black .
+poetry run isort --profile=black .
+poetry run mypy .
+```
+
+## Previewing Documentation Locally
+
+To preview the documentation locally, run the following command:
+
+```sh
+poetry run mkdocs serve
+```
+
+## Publishing
+
+### Automated Release with release-please
+
+The `release-please` tool automates the release process by generating release PRs with version bumps and changelogs.
+
+### Automated Release from main branch
+
+Each commit to the `main` branch is automatically released to the `main` tag on the page.
+
+## Manual Release from Main Branch
+
+To manually release from the `main` branch, follow these steps:
+
+```sh
+poetry run publish
+```
