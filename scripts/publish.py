@@ -9,7 +9,16 @@ import scripts.utils as utils
 logger = utils.setup(__name__)
 
 
-def _parse_version(version: str) -> str:
+def _parse_version(version: str) -> tuple[str, bool]:
+    """
+    Parses the given version string and returns a short version string and a boolean indicating whether it's a prerelease.
+
+    Args:
+        version (str): The version string to parse.
+
+    Returns:
+        Tuple[str, bool]: A tuple containing the short version string and a boolean indicating whether it's a prerelease.
+    """
     short_version = ""
     is_prerelease = True
 
@@ -28,6 +37,15 @@ def _parse_version(version: str) -> str:
 
 
 def mike(args: list[str]) -> None:
+    """
+    Runs Mike with the given arguments.
+
+    Args:
+        args (list[str]): The list of arguments to pass to Mike.
+
+    Raises:
+        Exception: If Mike command execution returns a non-zero exit code.
+    """
     rc = subprocess.run(
         ["mike"] + args,
         stdout=sys.stdout,
@@ -36,20 +54,34 @@ def mike(args: list[str]) -> None:
     if rc.returncode != 0:
         raise Exception(rc.stderr)
 
+
 def is_initial() -> bool:
+    """
+    Checks if the current repository state is initial.
+
+    Returns:
+        bool: True if the repository state is initial, False otherwise.
+    """
     rc = subprocess.run(
         ["git", "show-ref", "--quiet", "refs/heads/gh-pages"],
     )
     return rc.returncode != 0
 
+
 def run(args=sys.argv):
+    """
+    Runs the publish script.
+
+    Args:
+        args: The arguments to the script.
+    """
     parser = argparse.ArgumentParser(
         prog="publish",
-        description="script to build and publish documentation of registry-operator docs",
+        description="Script to build and publish documentation of registry-operator docs",
     )
     parser.add_argument(
         "--version",
-        help="tagged version which should be built",
+        help="Tagged version which should be built",
         default="main",
         type=str,
         required=False,

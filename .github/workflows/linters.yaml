@@ -14,10 +14,28 @@ jobs:
   commitlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: wagoid/commitlint-github-action@v6
         with:
           configFile: .commitlintrc.mjs
-          token: ${{ secrets.GITHUB_TOKEN }}
+
+  pylinters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: fregante/setup-git-user@v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          check-latest: true
+      - run: |
+          pip install poetry
+      - run: |
+          poetry install
+      - run: |
+          poetry run black --check .
+      - run: |
+          poetry run isort --profile black --check .
+      - run: |
+          poetry run mypy .
