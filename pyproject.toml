@@ -11,6 +11,7 @@ mkdocs = "^1.5.3"
 mkdocs-material = "^9.5.15"
 mkdocs-macros-plugin = "^1.0.5"
 semver = "^3.0.2"
+mkdocs-nav-weight = "^0.2.0"
 
 [tool.poetry.scripts]
 publish = 'scripts.publish:run'
