@@ -1,24 +1,17 @@
-name: linters
+name: publish-docs
 
 on:
-  pull_request:
-    branches: [ '*' ]
   push:
     branches:
       - "main"
+    tags:
+      - 'v*'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  commitlint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: wagoid/commitlint-github-action@v6
-        with:
-          configFile: .commitlintrc.mjs
-
-  pylinters:
+  release-docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,8 +27,4 @@ jobs:
       - run: |
           poetry install
       - run: |
-          poetry run black --check .
-      - run: |
-          poetry run isort --profile black --check .
-      - run: |
-          poetry run mypy .
+          poetry run publish --version "${{ github.ref_name }}"
